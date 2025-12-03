@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setStreamImages:(bool)streamImages;
 - (void)receivedImageFromStream;
 - (void)setMaxFramesPerSecond:(float)maxFramesPerSecond;
+- (void)setOutputFormat:(NSString *)format;
 
 @end
 

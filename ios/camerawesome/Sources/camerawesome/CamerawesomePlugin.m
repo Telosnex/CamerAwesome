@@ -660,7 +660,8 @@ FlutterEventSink physicalButtonEventSink;
     *error = [FlutterError errorWithCode:@"MULTI_CAMERA_UNSUPPORTED" message:@"this feature is currently not supported with multi camera feature" details:nil];
     return;
   }
-  
+
+  [self.camera.imageStreamController setOutputFormat:[format lowercaseString]];
   [self.camera.imageStreamController setStreamImages:autoStart];
   
   // Force a frame rate to improve performance

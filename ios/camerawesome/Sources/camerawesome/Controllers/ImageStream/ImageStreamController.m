@@ -6,6 +6,16 @@
 //
 
 #import "ImageStreamController.h"
+#import <CoreImage/CoreImage.h>
+#import <ImageIO/ImageIO.h>
+
+@interface ImageStreamController ()
+
+@property(nonatomic, copy) NSString *outputFormat;
+@property(nonatomic, strong) CIContext *ciContext;
+@property(nonatomic, assign) CGFloat jpegQuality;
+
+@end
 
 @implementation ImageStreamController
 
@@ -13,8 +23,12 @@ NSInteger const MaxPendingProcessedImage = 4;
 
 - (instancetype)initWithStreamImages:(bool)streamImages {
   self = [super init];
-  _streamImages = streamImages;
-  _processingImage = 0;
+  if (self) {
+    _streamImages = streamImages;
+    _processingImage = 0;
+    _outputFormat = @"bgra8888";
+    _jpegQuality = 0.7f;
+  }
   return self;
 }
 
@@ -38,55 +52,78 @@ NSInteger const MaxPendingProcessedImage = 4;
   
   size_t imageWidth = CVPixelBufferGetWidth(pixelBuffer);
   size_t imageHeight = CVPixelBufferGetHeight(pixelBuffer);
+  NSString *requestedFormat = self.outputFormat ?: @"bgra8888";
+  NSDictionary *imageBuffer = nil;
   
-  NSMutableArray *planes = [NSMutableArray array];
-  
-  const Boolean isPlanar = CVPixelBufferIsPlanar(pixelBuffer);
-  size_t planeCount;
-  if (isPlanar) {
-    planeCount = CVPixelBufferGetPlaneCount(pixelBuffer);
-  } else {
-    planeCount = 1;
+  if ([requestedFormat isEqualToString:@"jpeg"]) {
+    if (@available(iOS 11.0, *)) {
+      CIImage *ciImage = [CIImage imageWithCVPixelBuffer:pixelBuffer];
+      CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+      NSDictionary *options = @{ (__bridge NSString *)kCGImageDestinationLossyCompressionQuality : @(self.jpegQuality) };
+      NSData *jpegData = [self.ciContext JPEGRepresentationOfImage:ciImage colorSpace:colorSpace options:options];
+      CGColorSpaceRelease(colorSpace);
+      if (jpegData != nil) {
+        imageBuffer = @{
+          @"width": [NSNumber numberWithUnsignedLong:imageWidth],
+          @"height": [NSNumber numberWithUnsignedLong:imageHeight],
+          @"format": @"jpeg",
+          @"jpegImage": [FlutterStandardTypedData typedDataWithBytes:jpegData],
+          @"cropRect": @{
+            @"left": @(0),
+            @"top": @(0),
+            @"right": [NSNumber numberWithUnsignedLong:imageWidth],
+            @"bottom": [NSNumber numberWithUnsignedLong:imageHeight],
+          },
+          @"rotation": [self getInputImageOrientation:orientation]
+        };
+      }
+    }
   }
-  
-  for (int i = 0; i < planeCount; i++) {
-    void *planeAddress;
-    size_t bytesPerRow;
-    size_t height;
-    size_t width;
+
+  if (imageBuffer == nil) {
+    NSMutableArray *planes = [NSMutableArray array];
+    const Boolean isPlanar = CVPixelBufferIsPlanar(pixelBuffer);
+    size_t planeCount = isPlanar ? CVPixelBufferGetPlaneCount(pixelBuffer) : 1;
     
-    if (isPlanar) {
-      planeAddress = CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, i);
-      bytesPerRow = CVPixelBufferGetBytesPerRowOfPlane(pixelBuffer, i);
-      height = CVPixelBufferGetHeightOfPlane(pixelBuffer, i);
-      width = CVPixelBufferGetWidthOfPlane(pixelBuffer, i);
-    } else {
-      planeAddress = CVPixelBufferGetBaseAddress(pixelBuffer);
-      bytesPerRow = CVPixelBufferGetBytesPerRow(pixelBuffer);
-      height = CVPixelBufferGetHeight(pixelBuffer);
-      width = CVPixelBufferGetWidth(pixelBuffer);
+    for (int i = 0; i < planeCount; i++) {
+      void *planeAddress;
+      size_t bytesPerRow;
+      size_t height;
+      size_t width;
+      
+      if (isPlanar) {
+        planeAddress = CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, i);
+        bytesPerRow = CVPixelBufferGetBytesPerRowOfPlane(pixelBuffer, i);
+        height = CVPixelBufferGetHeightOfPlane(pixelBuffer, i);
+        width = CVPixelBufferGetWidthOfPlane(pixelBuffer, i);
+      } else {
+        planeAddress = CVPixelBufferGetBaseAddress(pixelBuffer);
+        bytesPerRow = CVPixelBufferGetBytesPerRow(pixelBuffer);
+        height = CVPixelBufferGetHeight(pixelBuffer);
+        width = CVPixelBufferGetWidth(pixelBuffer);
+      }
+      
+      NSNumber *length = @(bytesPerRow * height);
+      NSData *bytes = [NSData dataWithBytes:planeAddress length:length.unsignedIntegerValue];
+      
+      [planes addObject:@{
+        @"bytesPerRow": @(bytesPerRow),
+        @"width": @(width),
+        @"height": @(height),
+        @"bytes": [FlutterStandardTypedData typedDataWithBytes:bytes],
+      }];
     }
     
-    NSNumber *length = @(bytesPerRow * height);
-    NSData *bytes = [NSData dataWithBytes:planeAddress length:length.unsignedIntegerValue];
-    
-    [planes addObject:@{
-      @"bytesPerRow": @(bytesPerRow),
-      @"width": @(width),
-      @"height": @(height),
-      @"bytes": [FlutterStandardTypedData typedDataWithBytes:bytes],
-    }];
+    imageBuffer = @{
+      @"width": [NSNumber numberWithUnsignedLong:imageWidth],
+      @"height": [NSNumber numberWithUnsignedLong:imageHeight],
+      @"format": @"bgra8888",
+      @"planes": planes,
+      @"rotation": [self getInputImageOrientation:orientation]
+    };
   }
   
   CVPixelBufferUnlockBaseAddress(pixelBuffer, kCVPixelBufferLock_ReadOnly);
-  
-  NSDictionary *imageBuffer = @{
-    @"width": [NSNumber numberWithUnsignedLong:imageWidth],
-    @"height": [NSNumber numberWithUnsignedLong:imageHeight],
-    @"format": @"bgra8888", // TODO: change this dynamically
-    @"planes": planes,
-    @"rotation": [self getInputImageOrientation:orientation]
-  };
   
   dispatch_async(dispatch_get_main_queue(), ^{
     self->_imageStreamEventSink(imageBuffer);
@@ -161,6 +198,22 @@ NSInteger const MaxPendingProcessedImage = 4;
 
 - (void)setStreamImages:(bool)streamImages {
   _streamImages = streamImages;
+}
+
+- (void)setOutputFormat:(NSString *)format {
+  NSString *normalizedFormat = [[format lowercaseString] copy];
+  if ([normalizedFormat isEqualToString:@"jpeg"]) {
+    _outputFormat = normalizedFormat;
+  } else {
+    _outputFormat = @"bgra8888";
+  }
+}
+
+- (CIContext *)ciContext {
+  if (_ciContext == nil) {
+    _ciContext = [CIContext contextWithOptions:nil];
+  }
+  return _ciContext;
 }
 
 @end

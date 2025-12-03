@@ -80,4 +80,7 @@ class CupertinoAnalysisOptions {
 
   const CupertinoAnalysisOptions.bgra8888()
       : this._(outputFormat: InputAnalysisImageFormat.bgra8888);
+
+  const CupertinoAnalysisOptions.jpeg()
+      : this._(outputFormat: InputAnalysisImageFormat.jpeg);
 }
