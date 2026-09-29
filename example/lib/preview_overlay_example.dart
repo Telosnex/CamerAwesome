@@ -4,7 +4,7 @@ import 'package:camera_app/utils/file_utils.dart';
 import 'package:camera_app/utils/mlkit_utils.dart';
 import 'package:camera_app/widgets/barcode_preview_overlay.dart';
 import 'package:camerawesome/camerawesome_plugin.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart';
 
 void main() {

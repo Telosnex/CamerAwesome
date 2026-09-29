@@ -6,7 +6,7 @@ import 'package:camerawesome/src/widgets/buttons/awesome_capture_button.dart';
 import 'package:camerawesome/src/widgets/buttons/awesome_pause_resume_button.dart';
 import 'package:camerawesome/src/widgets/camera_awesome_builder.dart';
 import 'package:camerawesome/src/widgets/utils/awesome_theme.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class AwesomeBottomActions extends StatelessWidget {
   final CameraState state;

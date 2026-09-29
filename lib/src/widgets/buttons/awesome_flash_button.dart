@@ -1,6 +1,6 @@
 import 'package:camerawesome/src/widgets/utils/awesome_circle_icon.dart';
 import 'package:camerawesome/src/widgets/utils/awesome_theme.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'package:camerawesome/src/orchestrator/models/camera_flashes.dart';
 import 'package:camerawesome/src/orchestrator/models/sensor_config.dart';

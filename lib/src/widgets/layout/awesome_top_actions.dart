@@ -2,7 +2,7 @@ import 'package:camerawesome/src/orchestrator/states/states.dart';
 import 'package:camerawesome/src/widgets/buttons/awesome_aspect_ratio_button.dart';
 import 'package:camerawesome/src/widgets/buttons/awesome_flash_button.dart';
 import 'package:camerawesome/src/widgets/buttons/awesome_location_button.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class AwesomeTopActions extends StatelessWidget {
   final CameraState state;

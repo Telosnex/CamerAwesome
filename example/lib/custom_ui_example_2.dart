@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:camerawesome/camerawesome_plugin.dart';
 import 'package:camerawesome/pigeon.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Tap to take a photo example, with almost no UI
 class CustomUiExample2 extends StatelessWidget {

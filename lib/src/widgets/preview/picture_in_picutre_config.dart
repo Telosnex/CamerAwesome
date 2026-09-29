@@ -1,5 +1,5 @@
 import 'package:camerawesome/src/orchestrator/models/sensors.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Builder used to decoarate the [preview] within it. The [preview] is the
 /// one tied to the [sensor].

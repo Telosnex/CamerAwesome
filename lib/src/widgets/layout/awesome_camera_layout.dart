@@ -11,7 +11,7 @@ import 'package:camerawesome/src/widgets/layout/layout.dart';
 import 'package:camerawesome/src/widgets/utils/awesome_theme.dart';
 import 'package:camerawesome/src/widgets/zoom/awesome_zoom_selector.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// This widget doesn't handle [PreparingCameraState]
 class AwesomeCameraLayout extends StatelessWidget {

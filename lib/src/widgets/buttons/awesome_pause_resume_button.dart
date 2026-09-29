@@ -1,5 +1,5 @@
 import 'package:camerawesome/src/widgets/utils/awesome_circle_icon.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'package:camerawesome/src/orchestrator/models/media_capture.dart';
 import 'package:camerawesome/src/orchestrator/states/video_camera_recording_state.dart';

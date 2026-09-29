@@ -1,5 +1,5 @@
 import 'package:camerawesome/camerawesome_plugin.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:camera_app/utils/file_utils.dart';
 import 'widgets/custom_media_preview.dart';
 

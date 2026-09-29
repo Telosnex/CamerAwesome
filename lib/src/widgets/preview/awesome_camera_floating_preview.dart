@@ -2,7 +2,7 @@ import 'package:camerawesome/pigeon.dart';
 import 'package:camerawesome/src/orchestrator/models/sensors.dart';
 import 'package:camerawesome/src/widgets/preview/awesome_preview_fit.dart';
 import 'package:camerawesome/src/widgets/widgets.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class AwesomeCameraFloatingPreview extends StatefulWidget {
   final Texture texture;

@@ -1,5 +1,5 @@
 import 'package:camerawesome/src/widgets/utils/awesome_bouncing_widget.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 typedef ButtonBuilder = Widget Function(
   Widget child,

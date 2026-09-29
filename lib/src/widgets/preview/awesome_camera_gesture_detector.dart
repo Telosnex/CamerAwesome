@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:camerawesome/pigeon.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'package:camerawesome/src/widgets/preview/awesome_focus_indicator.dart';
 

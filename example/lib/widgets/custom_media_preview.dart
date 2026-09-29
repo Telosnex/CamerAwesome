@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:camera_app/widgets/mini_video_player.dart';
 import 'package:camerawesome/camerawesome_plugin.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class CustomMediaPreview extends StatelessWidget {
   final MediaCapture? mediaCapture;
