@@ -22,8 +22,9 @@ void main() {
     const width = 2;
     const height = 2;
     const bytesPerRow = width * 4;
-    final pixels =
-        Uint8List.fromList(List<int>.filled(width * height * 4, 0x80));
+    final pixels = Uint8List.fromList(
+      List<int>.filled(width * height * 4, 0x80),
+    );
     final image = AnalysisImageWrapper(
       format: AnalysisImageFormat.bgra8888,
       bytes: pixels,
