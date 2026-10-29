@@ -34,6 +34,10 @@ jobs:
       - uses: Telosnex/telosnex_ci_tools/actions/setup-flutter@cba77fc0d4330f1bef81193c53cd7dd976f0ebcf # v0.5.3
       - uses: Telosnex/telosnex_ci_tools/actions/ios-simulator-boot@cba77fc0d4330f1bef81193c53cd7dd976f0ebcf # v0.5.3
         id: simulator
+      # The runner's CocoaPods spec repo is older than the pods the example
+      # locks (pod install: "specs repository is too out-of-date").
+      - name: Update the CocoaPods specs
+        run: pod repo update
       # One target: one Xcode build, install and launch. No build ahead
       # (flutter build ios --simulator), see ios-flutter-test.
       - uses: Telosnex/telosnex_ci_tools/actions/ios-flutter-test@cba77fc0d4330f1bef81193c53cd7dd976f0ebcf # v0.5.3
