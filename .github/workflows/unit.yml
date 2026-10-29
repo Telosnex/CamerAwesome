@@ -32,6 +32,9 @@ jobs:
       - uses: Telosnex/telosnex_ci_tools/actions/setup-flutter@cba77fc0d4330f1bef81193c53cd7dd976f0ebcf # v0.5.3
       - uses: Telosnex/telosnex_ci_tools/actions/lint@cba77fc0d4330f1bef81193c53cd7dd976f0ebcf # v0.5.3
       - run: flutter pub get
+      # The iOS integration test app (see integration.yml): analyzed too.
+      - run: flutter pub get
+        working-directory: ios_test_app
       # Generated files (first line "// GENERATED ...") keep their generator's
       # layout.
       - run: |
