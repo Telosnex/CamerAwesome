@@ -21,8 +21,10 @@ defaults:
     shell: bash
 
 jobs:
-  # The example app's integration tests on a device. The plugin is mobile
-  # only (Android and iOS), so there are no desktop or web jobs.
+  # The plugin's native tests on a device. ios_test_app depends only on
+  # camerawesome (SwiftPM, no Podfile): the example app pulls in ML Kit,
+  # which ships CocoaPods only and has no arm64 simulator slice. The
+  # Telosnex app also builds camerawesome with SwiftPM.
   ios:
     name: iOS ARM64 simulator
     runs-on: macos-26
@@ -34,15 +36,11 @@ jobs:
       - uses: Telosnex/telosnex_ci_tools/actions/setup-flutter@cba77fc0d4330f1bef81193c53cd7dd976f0ebcf # v0.5.3
       - uses: Telosnex/telosnex_ci_tools/actions/ios-simulator-boot@cba77fc0d4330f1bef81193c53cd7dd976f0ebcf # v0.5.3
         id: simulator
-      # The runner's CocoaPods spec repo is older than the pods the example
-      # locks (pod install: "specs repository is too out-of-date").
-      - name: Update the CocoaPods specs
-        run: pod repo update
       # One target: one Xcode build, install and launch. No build ahead
       # (flutter build ios --simulator), see ios-flutter-test.
       - uses: Telosnex/telosnex_ci_tools/actions/ios-flutter-test@cba77fc0d4330f1bef81193c53cd7dd976f0ebcf # v0.5.3
         with:
-          working-directory: example
+          working-directory: ios_test_app
           target: integration_test/platform_smoke_test.dart
           udid: ${{ steps.simulator.outputs.udid }}
           artifact-name: ios-simulator-logs
