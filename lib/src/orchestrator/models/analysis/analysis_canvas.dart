@@ -6,10 +6,7 @@ class CanvasTransformation {
   final Point? scale;
   final Point? translate;
 
-  const CanvasTransformation({
-    this.scale,
-    this.translate,
-  });
+  const CanvasTransformation({this.scale, this.translate});
 }
 
 extension CanvasTransformationExt on Canvas {
@@ -18,8 +15,10 @@ extension CanvasTransformationExt on Canvas {
     Size canvasSize,
   ) {
     if (transformation.scale != null) {
-      scale(transformation.scale!.x.toDouble(),
-          transformation.scale!.y.toDouble());
+      scale(
+        transformation.scale!.x.toDouble(),
+        transformation.scale!.y.toDouble(),
+      );
     }
     if (transformation.translate != null) {
       translate(

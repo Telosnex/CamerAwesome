@@ -51,10 +51,7 @@ class _AnimatedPreviewFitState extends State<AnimatedPreviewFit> {
     sizeCalculator!.compute();
     maxSize = sizeCalculator!.maxSize;
 
-    animation = Tween<Size>(
-      begin: maxSize,
-      end: maxSize,
-    );
+    animation = Tween<Size>(begin: maxSize, end: maxSize);
     _handPreviewCalculated();
   }
 
@@ -147,6 +144,7 @@ class PreviewFitWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final transformController = TransformationController()
+      // ignore: deprecated_member_use
       ..value = (Matrix4.identity()..scale(scale));
 
     return Align(
@@ -260,10 +258,7 @@ class PreviewSizeCalculator {
   }
 
   PreviewSize getMaxPreviewSize() {
-    return PreviewSize(
-      width: maxSize.width,
-      height: maxSize.height,
-    );
+    return PreviewSize(width: maxSize.width, height: maxSize.height);
   }
 
   double _computeZoom() {

@@ -7,19 +7,14 @@ import 'package:material_ui/material_ui.dart';
 class AwesomeCameraModeSelector extends StatelessWidget {
   final CameraState state;
 
-  const AwesomeCameraModeSelector({
-    super.key,
-    required this.state,
-  });
+  const AwesomeCameraModeSelector({super.key, required this.state});
 
   @override
   Widget build(BuildContext context) {
     final theme = AwesomeThemeProvider.of(context).theme;
     Widget content;
     if (state is VideoRecordingCameraState || state.saveConfig == null) {
-      content = const SizedBox(
-        height: 40,
-      );
+      content = const SizedBox(height: 40);
     } else {
       content = CameraModePager(
         initialMode: state.captureMode,
@@ -67,8 +62,10 @@ class _CameraModePagerState extends State<CameraModePager> {
     _index = widget.initialMode != null
         ? widget.availableModes.indexOf(widget.initialMode!)
         : 0;
-    _pageController =
-        PageController(viewportFraction: 0.25, initialPage: _index);
+    _pageController = PageController(
+      viewportFraction: 0.25,
+      initialPage: _index,
+    );
   }
 
   @override
@@ -113,10 +110,7 @@ class _CameraModePagerState extends State<CameraModePager> {
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             shadows: [
-                              Shadow(
-                                blurRadius: 4,
-                                color: Colors.black,
-                              )
+                              Shadow(blurRadius: 4, color: Colors.black),
                             ],
                           ),
                         ),
@@ -134,7 +128,7 @@ class _CameraModePagerState extends State<CameraModePager> {
               }),
             ),
           ),
-        )
+        ),
       ],
     );
   }

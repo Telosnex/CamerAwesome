@@ -175,7 +175,7 @@ class ConvolutionSubFilter implements ImageSubFilter {
   ConvolutionSubFilter(this.weights, [this.bias = 0]);
 
   ConvolutionSubFilter.fromKernel(ConvolutionKernel kernel)
-      : this(kernel.convolution, kernel.bias);
+    : this(kernel.convolution, kernel.bias);
 
   ///Apply the [ConvolutionSubFilter] to an Image.
   @override

@@ -4,7 +4,7 @@ enum InputAnalysisImageRotation {
   rotation0deg,
   rotation90deg,
   rotation180deg,
-  rotation270deg
+  rotation270deg,
 }
 
 InputAnalysisImageFormat inputAnalysisImageFormatParser(String value) {

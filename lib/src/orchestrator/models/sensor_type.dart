@@ -85,12 +85,11 @@ class SensorDeviceData {
   }
 
   int get availableBackSensors => [
-        wideAngle,
-        ultraWideAngle,
-        telephoto,
-      ].where((element) => element != null).length;
+    wideAngle,
+    ultraWideAngle,
+    telephoto,
+  ].where((element) => element != null).length;
 
-  int get availableFrontSensors => [
-        trueDepth,
-      ].where((element) => element != null).length;
+  int get availableFrontSensors =>
+      [trueDepth].where((element) => element != null).length;
 }

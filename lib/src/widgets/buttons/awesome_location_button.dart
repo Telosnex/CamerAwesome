@@ -9,7 +9,7 @@ class AwesomeLocationButton extends StatelessWidget {
   final AwesomeTheme? theme;
   final Widget Function(bool saveGpsLocation) iconBuilder;
   final void Function(PhotoCameraState state, bool saveGpsLocation)
-      onLocationTap;
+  onLocationTap;
 
   AwesomeLocationButton({
     super.key,
@@ -17,18 +17,20 @@ class AwesomeLocationButton extends StatelessWidget {
     this.theme,
     Widget Function(bool saveGpsLocation)? iconBuilder,
     void Function(PhotoCameraState state, bool saveGpsLocation)? onLocationTap,
-  })  : iconBuilder = iconBuilder ??
-            ((saveGpsLocation) {
-              return AwesomeCircleWidget.icon(
-                theme: theme,
-                icon: saveGpsLocation == true
-                    ? Icons.location_pin
-                    : Icons.location_off_outlined,
-              );
-            }),
-        onLocationTap = onLocationTap ??
-            ((state, saveGpsLocation) =>
-                state.shouldSaveGpsLocation(saveGpsLocation));
+  }) : iconBuilder =
+           iconBuilder ??
+           ((saveGpsLocation) {
+             return AwesomeCircleWidget.icon(
+               theme: theme,
+               icon: saveGpsLocation == true
+                   ? Icons.location_pin
+                   : Icons.location_off_outlined,
+             );
+           }),
+       onLocationTap =
+           onLocationTap ??
+           ((state, saveGpsLocation) =>
+               state.shouldSaveGpsLocation(saveGpsLocation));
 
   @override
   Widget build(BuildContext context) {

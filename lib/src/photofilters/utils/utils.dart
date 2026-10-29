@@ -5,14 +5,8 @@ List<num?> rgbToHsv(num r, num g, num b) {
   g /= 255;
   b /= 255;
 
-  final num mMax = max(
-    r,
-    max(g, b),
-  );
-  final num mMin = min(
-    r,
-    max(g, b),
-  );
+  final num mMax = max(r, max(g, b));
+  final num mMin = min(r, max(g, b));
   final num h, s, v = mMax;
 
   final num d = mMax - mMin;

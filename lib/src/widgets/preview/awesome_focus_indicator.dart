@@ -12,18 +12,12 @@ class AwesomeFocusIndicator extends StatelessWidget {
     return IgnorePointer(
       child: TweenAnimationBuilder<double>(
         key: ValueKey(position),
-        tween: Tween<double>(
-          begin: 80,
-          end: 50,
-        ),
+        tween: Tween<double>(begin: 80, end: 50),
         duration: const Duration(milliseconds: 2000),
         curve: Curves.fastLinearToSlowEaseIn,
         builder: (_, anim, child) {
           return CustomPaint(
-            painter: AwesomeFocusPainter(
-              tapPosition: position,
-              rectSize: anim,
-            ),
+            painter: AwesomeFocusPainter(tapPosition: position, rectSize: anim),
           );
         },
       ),

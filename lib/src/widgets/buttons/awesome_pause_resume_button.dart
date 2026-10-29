@@ -10,11 +10,7 @@ class AwesomePauseResumeButton extends StatefulWidget {
   final VideoRecordingCameraState state;
   final AwesomeTheme? theme;
 
-  const AwesomePauseResumeButton({
-    super.key,
-    required this.state,
-    this.theme,
-  });
+  const AwesomePauseResumeButton({super.key, required this.state, this.theme});
 
   @override
   State<StatefulWidget> createState() {
@@ -30,7 +26,9 @@ class _AwesomePauseResumeButtonState extends State<AwesomePauseResumeButton>
   @override
   void initState() {
     _controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 300));
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
     _animation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
     super.initState();
   }

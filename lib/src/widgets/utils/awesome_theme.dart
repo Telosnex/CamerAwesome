@@ -1,10 +1,7 @@
 import 'package:camerawesome/src/widgets/utils/awesome_bouncing_widget.dart';
 import 'package:material_ui/material_ui.dart';
 
-typedef ButtonBuilder = Widget Function(
-  Widget child,
-  VoidCallback onTap,
-);
+typedef ButtonBuilder = Widget Function(Widget child, VoidCallback onTap);
 
 class AwesomeTheme {
   final AwesomeButtonTheme buttonTheme;
@@ -13,9 +10,9 @@ class AwesomeTheme {
   AwesomeTheme({
     AwesomeButtonTheme? buttonTheme,
     Color? bottomActionsBackgroundColor,
-  })  : buttonTheme = buttonTheme ?? AwesomeButtonTheme(),
-        bottomActionsBackgroundColor =
-            bottomActionsBackgroundColor ?? Colors.black54;
+  }) : buttonTheme = buttonTheme ?? AwesomeButtonTheme(),
+       bottomActionsBackgroundColor =
+           bottomActionsBackgroundColor ?? Colors.black54;
 
   @override
   bool operator ==(Object other) =>
@@ -60,9 +57,10 @@ class AwesomeButtonTheme {
     this.shape = const CircleBorder(),
     this.rotateWithCamera = true,
     ButtonBuilder? buttonBuilder,
-  }) : buttonBuilder = buttonBuilder ??
-            ((Widget child, VoidCallback onTap) =>
-                AwesomeBouncingWidget(onTap: onTap, child: child));
+  }) : buttonBuilder =
+           buttonBuilder ??
+           ((Widget child, VoidCallback onTap) =>
+               AwesomeBouncingWidget(onTap: onTap, child: child));
 
   @override
   bool operator ==(Object other) =>
@@ -112,11 +110,8 @@ class AwesomeButtonTheme {
 class AwesomeThemeProvider extends InheritedWidget {
   final AwesomeTheme theme;
 
-  AwesomeThemeProvider({
-    super.key,
-    AwesomeTheme? theme,
-    required super.child,
-  }) : theme = theme ?? AwesomeTheme();
+  AwesomeThemeProvider({super.key, AwesomeTheme? theme, required super.child})
+    : theme = theme ?? AwesomeTheme();
 
   static AwesomeThemeProvider of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<AwesomeThemeProvider>()!;

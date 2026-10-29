@@ -4,10 +4,7 @@ import 'package:material_ui/material_ui.dart';
 class AwesomeFilterNameIndicator extends StatelessWidget {
   final CameraState state;
 
-  const AwesomeFilterNameIndicator({
-    super.key,
-    required this.state,
-  });
+  const AwesomeFilterNameIndicator({super.key, required this.state});
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +18,10 @@ class AwesomeFilterNameIndicator extends StatelessWidget {
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 5,
+                    horizontal: 8,
+                  ),
                   child: Text(
                     snapshot.data!.name.toUpperCase().toString(),
                     style: const TextStyle(

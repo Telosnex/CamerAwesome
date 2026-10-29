@@ -18,14 +18,15 @@ class AwesomeFilterButton extends StatelessWidget {
     this.theme,
     Widget Function()? iconBuilder,
     final void Function()? onFilterTap,
-  })  : iconBuilder = iconBuilder ??
-            (() {
-              return AwesomeCircleWidget.icon(
-                icon: Icons.filter_rounded,
-                theme: theme,
-              );
-            }),
-        onFilterTap = onFilterTap ?? (() => state.toggleFilterSelector());
+  }) : iconBuilder =
+           iconBuilder ??
+           (() {
+             return AwesomeCircleWidget.icon(
+               icon: Icons.filter_rounded,
+               theme: theme,
+             );
+           }),
+       onFilterTap = onFilterTap ?? (() => state.toggleFilterSelector());
 
   @override
   Widget build(BuildContext context) {

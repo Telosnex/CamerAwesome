@@ -19,7 +19,7 @@ class AwesomeCameraFloatingPreview extends StatefulWidget {
     required this.aspectRatio,
     PictureInPictureConfig? pictureInPictureConfig,
   }) : pictureInPictureConfig =
-            pictureInPictureConfig ?? PictureInPictureConfig(sensor: sensor);
+           pictureInPictureConfig ?? PictureInPictureConfig(sensor: sensor);
 
   @override
   State<AwesomeCameraFloatingPreview> createState() =>
@@ -57,20 +57,18 @@ class _AwesomeCameraFloatingPreviewState
                 }
               : null,
           child: widget.pictureInPictureConfig.pictureInPictureBuilder(
-              AnimatedPreviewFit(
-                previewFit: CameraPreviewFit.cover,
-                previewSize: PreviewSize(
-                  width: 1000,
-                  height: 1000 / widget.aspectRatio,
-                ), // FIXME  we don't know preview size of other sensors
-                constraints: const BoxConstraints(
-                  maxWidth: 300,
-                  maxHeight: 300,
-                ),
-                sensor: widget.sensor,
-                child: widget.texture,
-              ),
-              widget.aspectRatio),
+            AnimatedPreviewFit(
+              previewFit: CameraPreviewFit.cover,
+              previewSize: PreviewSize(
+                width: 1000,
+                height: 1000 / widget.aspectRatio,
+              ), // FIXME  we don't know preview size of other sensors
+              constraints: const BoxConstraints(maxWidth: 300, maxHeight: 300),
+              sensor: widget.sensor,
+              child: widget.texture,
+            ),
+            widget.aspectRatio,
+          ),
         ),
       ),
     );

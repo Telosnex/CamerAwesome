@@ -2,9 +2,9 @@ import 'package:camerawesome/pigeon.dart';
 
 extension PermissionsUtils on CamerAwesomePermission {
   static List<CamerAwesomePermission> get needed => [
-        CamerAwesomePermission.camera,
-        //CamerAwesomePermission.storage,
-      ];
+    CamerAwesomePermission.camera,
+    //CamerAwesomePermission.storage,
+  ];
 }
 
 extension PermissionsMatcher on List<CamerAwesomePermission> {

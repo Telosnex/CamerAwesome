@@ -43,30 +43,17 @@ class AndroidAnalysisOptions {
     this.width = 500,
   });
 
-  const AndroidAnalysisOptions.nv21({
-    required int width,
-  }) : this._(
-          width: width,
-          outputFormat: InputAnalysisImageFormat.nv21,
-        );
+  const AndroidAnalysisOptions.nv21({required int width})
+    : this._(width: width, outputFormat: InputAnalysisImageFormat.nv21);
 
-  const AndroidAnalysisOptions.yuv420({
-    required int width,
-  }) : this._(
-          width: width,
-          outputFormat: InputAnalysisImageFormat.yuv_420,
-        );
+  const AndroidAnalysisOptions.yuv420({required int width})
+    : this._(width: width, outputFormat: InputAnalysisImageFormat.yuv_420);
 
-  const AndroidAnalysisOptions.bgra8888({
-    required int width,
-  }) : this._(
-          width: width,
-          outputFormat: InputAnalysisImageFormat.bgra8888,
-        );
+  const AndroidAnalysisOptions.bgra8888({required int width})
+    : this._(width: width, outputFormat: InputAnalysisImageFormat.bgra8888);
 
-  const AndroidAnalysisOptions.jpeg({
-    required int width,
-  }) : this._(width: width, outputFormat: InputAnalysisImageFormat.jpeg);
+  const AndroidAnalysisOptions.jpeg({required int width})
+    : this._(width: width, outputFormat: InputAnalysisImageFormat.jpeg);
 }
 
 class CupertinoAnalysisOptions {
@@ -74,13 +61,11 @@ class CupertinoAnalysisOptions {
   /// Recommended format for image analysis on iOS is bgra8888.
   final InputAnalysisImageFormat outputFormat;
 
-  const CupertinoAnalysisOptions._({
-    required this.outputFormat,
-  });
+  const CupertinoAnalysisOptions._({required this.outputFormat});
 
   const CupertinoAnalysisOptions.bgra8888()
-      : this._(outputFormat: InputAnalysisImageFormat.bgra8888);
+    : this._(outputFormat: InputAnalysisImageFormat.bgra8888);
 
   const CupertinoAnalysisOptions.jpeg()
-      : this._(outputFormat: InputAnalysisImageFormat.jpeg);
+    : this._(outputFormat: InputAnalysisImageFormat.jpeg);
 }

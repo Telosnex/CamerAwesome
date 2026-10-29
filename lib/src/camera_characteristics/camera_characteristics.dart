@@ -8,6 +8,7 @@ class CameraCharacteristics {
     SensorPosition sensor,
   ) {
     return CameraInterface().isVideoRecordingAndImageAnalysisSupported(
-        PigeonSensorPosition.values.byName(sensor.name));
+      PigeonSensorPosition.values.byName(sensor.name),
+    );
   }
 }

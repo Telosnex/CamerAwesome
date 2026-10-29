@@ -41,28 +41,23 @@ class VideoRecordingCameraState extends CameraState {
   /// Call [resumeRecording] to resume the capture.
   Future<void> pauseRecording(MediaCapture currentCapture) async {
     if (!currentCapture.isVideo) {
-      throw "Trying to pause a video while currentCapture is not a video (${currentCapture.captureRequest.when(
-        single: (single) => single.file!.path,
-        multiple: (multiple) => multiple.fileBySensor.values.first!.path,
-      )})";
+      throw "Trying to pause a video while currentCapture is not a video (${currentCapture.captureRequest.when(single: (single) => single.file!.path, multiple: (multiple) => multiple.fileBySensor.values.first!.path)})";
     }
     if (currentCapture.status != MediaCaptureStatus.capturing) {
       throw "Trying to pause a media capture in status ${currentCapture.status} instead of ${MediaCaptureStatus.capturing}";
     }
     await CamerawesomePlugin.pauseVideoRecording();
     _mediaCapture = MediaCapture.capturing(
-        captureRequest: currentCapture.captureRequest,
-        videoState: VideoState.paused);
+      captureRequest: currentCapture.captureRequest,
+      videoState: VideoState.paused,
+    );
   }
 
   /// Resumes a video recording.
   /// [pauseRecording] must have been called before.
   Future<void> resumeRecording(MediaCapture currentCapture) async {
     if (!currentCapture.isVideo) {
-      throw "Trying to pause a video while currentCapture is not a video (${currentCapture.captureRequest.when(
-        single: (single) => single.file!.path,
-        multiple: (multiple) => multiple.fileBySensor.values.first!.path,
-      )})";
+      throw "Trying to pause a video while currentCapture is not a video (${currentCapture.captureRequest.when(single: (single) => single.file!.path, multiple: (multiple) => multiple.fileBySensor.values.first!.path)})";
     }
     if (currentCapture.status != MediaCaptureStatus.capturing) {
       throw "Trying to pause a media capture in status ${currentCapture.status} instead of ${MediaCaptureStatus.capturing}";

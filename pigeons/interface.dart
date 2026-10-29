@@ -30,11 +30,7 @@ class PigeonSensor {
   });
 }
 
-enum PigeonSensorPosition {
-  back,
-  front,
-  unknown,
-}
+enum PigeonSensorPosition { back, front, unknown }
 
 /// Video recording quality, from [sd] to [uhd], with [highest] and [lowest] to
 /// let the device choose the best/worst quality available.
@@ -42,22 +38,12 @@ enum PigeonSensorPosition {
 ///
 /// Qualities are defined like this:
 /// [sd] < [hd] < [fhd] < [uhd]
-enum VideoRecordingQuality {
-  lowest,
-  sd,
-  hd,
-  fhd,
-  uhd,
-  highest,
-}
+enum VideoRecordingQuality { lowest, sd, hd, fhd, uhd, highest }
 
 /// If the specified [VideoRecordingQuality] is not available on the device,
 /// the [VideoRecordingQuality] will fallback to [higher] or [lower] quality.
 /// [higher] is the default fallback strategy.
-enum QualityFallbackStrategy {
-  higher,
-  lower,
-}
+enum QualityFallbackStrategy { higher, lower }
 
 /// Video recording options. Some of them are specific to each platform.
 class VideoOptions {
@@ -86,19 +72,10 @@ class AndroidVideoOptions {
 
   final QualityFallbackStrategy? fallbackStrategy;
 
-  AndroidVideoOptions({
-    required this.bitrate,
-    required this.fallbackStrategy,
-  });
+  AndroidVideoOptions({required this.bitrate, required this.fallbackStrategy});
 }
 
-enum CupertinoFileType {
-  quickTimeMovie,
-  mpeg4,
-  appleM4V,
-  type3GPP,
-  type3GPP2,
-}
+enum CupertinoFileType { quickTimeMovie, mpeg4, appleM4V, type3GPP, type3GPP2 }
 
 enum CupertinoCodecType {
   h264,
@@ -122,11 +99,7 @@ class CupertinoVideoOptions {
   /// Specify video fps, defaults to [30].
   final int? fps;
 
-  CupertinoVideoOptions({
-    this.fileType,
-    this.codec,
-    this.fps,
-  });
+  CupertinoVideoOptions({this.fileType, this.codec, this.fps});
 }
 
 enum PigeonSensorType {
@@ -145,7 +118,7 @@ enum PigeonSensorType {
   ///
   /// iOS only
   trueDepth,
-  unknown;
+  unknown,
 
   // SensorType get defaultSensorType => SensorType.wideAngle;
   // SensorType defaultSensorType() => SensorType.wideAngle;
@@ -206,15 +179,15 @@ class PigeonSensorDeviceData {
     this.trueDepth,
   });
 
-// int get availableBackSensors => [
-//       wideAngle,
-//       ultraWideAngle,
-//       telephoto,
-//     ].where((element) => element != null).length;
+  // int get availableBackSensors => [
+  //       wideAngle,
+  //       ultraWideAngle,
+  //       telephoto,
+  //     ].where((element) => element != null).length;
 
-// int get availableFrontSensors => [
-//       trueDepth,
-//     ].where((element) => element != null).length;
+  // int get availableFrontSensors => [
+  //       trueDepth,
+  //     ].where((element) => element != null).length;
 }
 
 enum CamerAwesomePermission {
@@ -259,7 +232,7 @@ enum AnalysisRotation {
   rotation0deg,
   rotation90deg,
   rotation180deg,
-  rotation270deg
+  rotation270deg,
 }
 
 class CropRectWrapper {

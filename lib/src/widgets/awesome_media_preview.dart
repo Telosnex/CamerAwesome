@@ -24,7 +24,8 @@ class AwesomeMediaPreview extends StatelessWidget {
       child: AspectRatio(
         aspectRatio: 1,
         child: AwesomeBouncingWidget(
-          onTap: mediaCapture != null &&
+          onTap:
+              mediaCapture != null &&
                   onMediaTap != null &&
                   mediaCapture?.status == MediaCaptureStatus.success
               ? () => onMediaTap!(mediaCapture!)
@@ -34,10 +35,7 @@ class AwesomeMediaPreview extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white30,
               shape: BoxShape.circle,
-              border: Border.all(
-                color: Colors.white38,
-                width: 2,
-              ),
+              border: Border.all(color: Colors.white38, width: 2),
             ),
             child: ClipOval(child: _buildMedia(mediaCapture)),
           ),
@@ -53,9 +51,7 @@ class AwesomeMediaPreview extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8),
             child: Platform.isIOS
-                ? const CupertinoActivityIndicator(
-                    color: Colors.white,
-                  )
+                ? const CupertinoActivityIndicator(color: Colors.white)
                 : const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: CircularProgressIndicator(
@@ -70,32 +66,31 @@ class AwesomeMediaPreview extends StatelessWidget {
           if (kIsWeb) {
             // TODO Check if that works
             return FutureBuilder<Uint8List>(
-                future: mediaCapture.captureRequest.when(
-                  single: (single) => single.file!.readAsBytes(),
-                  multiple: (multiple) =>
-                      multiple.fileBySensor.values.first!.readAsBytes(),
-                ),
-                builder: (_, snapshot) {
-                  if (snapshot.hasData) {
-                    return Image.memory(
-                      snapshot.requireData,
-                      fit: BoxFit.cover,
-                      width: 300,
-                    );
-                  } else {
-                    return Platform.isIOS
-                        ? const CupertinoActivityIndicator(
+              future: mediaCapture.captureRequest.when(
+                single: (single) => single.file!.readAsBytes(),
+                multiple: (multiple) =>
+                    multiple.fileBySensor.values.first!.readAsBytes(),
+              ),
+              builder: (_, snapshot) {
+                if (snapshot.hasData) {
+                  return Image.memory(
+                    snapshot.requireData,
+                    fit: BoxFit.cover,
+                    width: 300,
+                  );
+                } else {
+                  return Platform.isIOS
+                      ? const CupertinoActivityIndicator(color: Colors.white)
+                      : const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: CircularProgressIndicator(
                             color: Colors.white,
-                          )
-                        : const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                              strokeWidth: 2.0,
-                            ),
-                          );
-                  }
-                });
+                            strokeWidth: 2.0,
+                          ),
+                        );
+                }
+              },
+            );
           } else {
             return Image(
               fit: BoxFit.cover,
@@ -114,21 +109,12 @@ class AwesomeMediaPreview extends StatelessWidget {
             );
           }
         } else {
-          return const Icon(
-            Icons.play_arrow_rounded,
-            color: Colors.white,
-          );
+          return const Icon(Icons.play_arrow_rounded, color: Colors.white);
         }
       case MediaCaptureStatus.failure:
-        return const Icon(
-          Icons.error,
-          color: Colors.white,
-        );
+        return const Icon(Icons.error, color: Colors.white);
       case null:
-        return const SizedBox(
-          width: 32,
-          height: 32,
-        );
+        return const SizedBox(width: 32, height: 32);
     }
   }
 }

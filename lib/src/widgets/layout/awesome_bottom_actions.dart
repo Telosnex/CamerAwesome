@@ -23,44 +23,43 @@ class AwesomeBottomActions extends StatelessWidget {
     Widget? captureButton,
     OnMediaTap? onMediaTap,
     this.padding = const EdgeInsets.symmetric(vertical: 8),
-  })  : captureButton = captureButton ??
-            AwesomeCaptureButton(
-              state: state,
-            ),
-        left = left ??
-            (state is VideoRecordingCameraState
-                ? AwesomePauseResumeButton(
-                    state: state,
-                  )
-                : Builder(builder: (context) {
-                    final theme = AwesomeThemeProvider.of(context).theme;
-                    return AwesomeCameraSwitchButton(
-                      state: state,
-                      theme: theme.copyWith(
-                        buttonTheme: theme.buttonTheme.copyWith(
-                          backgroundColor: Colors.white12,
-                        ),
-                      ),
-                    );
-                  })),
-        right = right ??
-            (state is VideoRecordingCameraState
-                ? const SizedBox(width: 48)
-                : StreamBuilder<MediaCapture?>(
-                    stream: state.captureState$,
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData) {
-                        return const SizedBox(width: 60, height: 60);
-                      }
-                      return SizedBox(
-                        width: 60,
-                        child: AwesomeMediaPreview(
-                          mediaCapture: snapshot.requireData,
-                          onMediaTap: onMediaTap,
-                        ),
-                      );
-                    },
-                  ));
+  }) : captureButton = captureButton ?? AwesomeCaptureButton(state: state),
+       left =
+           left ??
+           (state is VideoRecordingCameraState
+               ? AwesomePauseResumeButton(state: state)
+               : Builder(
+                   builder: (context) {
+                     final theme = AwesomeThemeProvider.of(context).theme;
+                     return AwesomeCameraSwitchButton(
+                       state: state,
+                       theme: theme.copyWith(
+                         buttonTheme: theme.buttonTheme.copyWith(
+                           backgroundColor: Colors.white12,
+                         ),
+                       ),
+                     );
+                   },
+                 )),
+       right =
+           right ??
+           (state is VideoRecordingCameraState
+               ? const SizedBox(width: 48)
+               : StreamBuilder<MediaCapture?>(
+                   stream: state.captureState$,
+                   builder: (context, snapshot) {
+                     if (!snapshot.hasData) {
+                       return const SizedBox(width: 60, height: 60);
+                     }
+                     return SizedBox(
+                       width: 60,
+                       child: AwesomeMediaPreview(
+                         mediaCapture: snapshot.requireData,
+                         onMediaTap: onMediaTap,
+                       ),
+                     );
+                   },
+                 ));
 
   @override
   Widget build(BuildContext context) {
@@ -69,17 +68,9 @@ class AwesomeBottomActions extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Expanded(
-            child: Center(
-              child: left,
-            ),
-          ),
+          Expanded(child: Center(child: left)),
           captureButton,
-          Expanded(
-            child: Center(
-              child: right,
-            ),
-          ),
+          Expanded(child: Center(child: right)),
         ],
       ),
     );

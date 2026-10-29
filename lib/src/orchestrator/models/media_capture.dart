@@ -1,19 +1,9 @@
 import 'package:camerawesome/camerawesome_plugin.dart';
 import 'package:flutter/foundation.dart';
 
-enum MediaCaptureStatus {
-  capturing,
-  success,
-  failure,
-}
+enum MediaCaptureStatus { capturing, success, failure }
 
-enum VideoState {
-  started,
-  paused,
-  resumed,
-  stopped,
-  error,
-}
+enum VideoState { started, paused, resumed, stopped, error }
 
 class MediaCapture {
   final Exception? exception;
@@ -27,17 +17,13 @@ class MediaCapture {
     this.videoState,
   }) : status = MediaCaptureStatus.capturing;
 
-  MediaCapture.success({
-    this.exception,
-    required this.captureRequest,
-  })  : status = MediaCaptureStatus.success,
-        videoState = VideoState.stopped;
+  MediaCapture.success({this.exception, required this.captureRequest})
+    : status = MediaCaptureStatus.success,
+      videoState = VideoState.stopped;
 
-  MediaCapture.failure({
-    this.exception,
-    required this.captureRequest,
-  })  : status = MediaCaptureStatus.failure,
-        videoState = VideoState.error;
+  MediaCapture.failure({this.exception, required this.captureRequest})
+    : status = MediaCaptureStatus.failure,
+      videoState = VideoState.error;
 
   /// Returns true if the capture has either a mimeType with "image" inside or
   /// if the file path ends with "jpg".
@@ -49,8 +35,9 @@ class MediaCapture {
               singleCaptureRequest.file?.path.endsWith("jpg") == true ||
               singleCaptureRequest.file?.mimeType?.contains("image") == true,
           multiple: (multipleCaptureRequest) =>
-              multipleCaptureRequest.fileBySensor.values.first?.path
-                      .endsWith("jpg") ==
+              multipleCaptureRequest.fileBySensor.values.first?.path.endsWith(
+                    "jpg",
+                  ) ==
                   true ||
               multipleCaptureRequest.fileBySensor.values.first?.mimeType
                       ?.contains("image") ==

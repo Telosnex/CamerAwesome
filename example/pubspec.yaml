@@ -27,6 +27,8 @@ dependencies:
 
 dev_dependencies:
   exif: ^3.3.0
+  integration_test:
+    sdk: flutter
   flutter_test:
     sdk: flutter
   patrol: ^4.10.0

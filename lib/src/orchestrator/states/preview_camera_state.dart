@@ -6,14 +6,11 @@ import 'package:camerawesome/src/orchestrator/camera_context.dart';
 
 /// Show the preview with optional image analysis, no photo or video captures
 class PreviewCameraState extends CameraState {
-  PreviewCameraState({
-    required CameraContext cameraContext,
-  }) : super(cameraContext);
+  PreviewCameraState({required CameraContext cameraContext})
+    : super(cameraContext);
 
   factory PreviewCameraState.from(CameraContext orchestrator) =>
-      PreviewCameraState(
-        cameraContext: orchestrator,
-      );
+      PreviewCameraState(cameraContext: orchestrator);
 
   @override
   CaptureMode get captureMode => CaptureMode.preview;

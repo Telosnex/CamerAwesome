@@ -45,11 +45,11 @@ class SensorConfig {
     double zoom = 0.0,
     CameraAspectRatios aspectRatio = CameraAspectRatios.ratio_4_3,
   }) : this._(
-          sensors: [sensor ?? Sensor.position(SensorPosition.back)],
-          flash: flashMode,
-          currentZoom: zoom,
-          aspectRatio: aspectRatio,
-        );
+         sensors: [sensor ?? Sensor.position(SensorPosition.back)],
+         flash: flashMode,
+         currentZoom: zoom,
+         aspectRatio: aspectRatio,
+       );
 
   SensorConfig.multiple({
     required List<Sensor> sensors,
@@ -57,11 +57,11 @@ class SensorConfig {
     double zoom = 0.0,
     CameraAspectRatios aspectRatio = CameraAspectRatios.ratio_4_3,
   }) : this._(
-          sensors: sensors,
-          flash: flashMode,
-          currentZoom: zoom,
-          aspectRatio: aspectRatio,
-        );
+         sensors: sensors,
+         flash: flashMode,
+         currentZoom: zoom,
+         aspectRatio: aspectRatio,
+       );
 
   SensorConfig._({
     required this.sensors,
@@ -75,7 +75,8 @@ class SensorConfig {
     flashMode$ = _flashModeController.stream;
 
     _sensorTypeController = BehaviorSubject<SensorType>.seeded(
-        sensors.first.type ?? SensorType.wideAngle);
+      sensors.first.type ?? SensorType.wideAngle,
+    );
     sensorType$ = _sensorTypeController.stream;
 
     _zoomController = BehaviorSubject<double>.seeded(currentZoom);
@@ -114,8 +115,9 @@ class SensorConfig {
     final maxZoom = await CamerawesomePlugin.getMaxZoom();
     if (minZoom == null || maxZoom == null || maxZoom <= minZoom) return;
     if (minZoom < 1.0 && maxZoom >= 1.0) {
-      final oneXLinearZoom =
-          ((1.0 - minZoom) / (maxZoom - minZoom)).clamp(0.0, 1.0).toDouble();
+      final oneXLinearZoom = ((1.0 - minZoom) / (maxZoom - minZoom))
+          .clamp(0.0, 1.0)
+          .toDouble();
       if (oneXLinearZoom > 0.0) {
         await setZoom(oneXLinearZoom);
       }

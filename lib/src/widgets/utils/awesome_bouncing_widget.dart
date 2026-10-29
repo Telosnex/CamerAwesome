@@ -30,14 +30,15 @@ class _AwesomeBouncingWidgetState extends State<AwesomeBouncingWidget>
 
   @override
   void initState() {
-    _controller = AnimationController(
-      vsync: this,
-      duration: widget.duration,
-      lowerBound: 0.0,
-      upperBound: 0.1,
-    )..addListener(() {
-        setState(() {});
-      });
+    _controller =
+        AnimationController(
+          vsync: this,
+          duration: widget.duration,
+          lowerBound: 0.0,
+          upperBound: 0.1,
+        )..addListener(() {
+          setState(() {});
+        });
     super.initState();
   }
 
@@ -62,10 +63,7 @@ class _AwesomeBouncingWidgetState extends State<AwesomeBouncingWidget>
           onTapDown: _onTapDown,
           onTapUp: _onTapUp,
           onTapCancel: _onTapCancel,
-          child: Transform.scale(
-            scale: _scale,
-            child: widget.child,
-          ),
+          child: Transform.scale(scale: _scale, child: widget.child),
         ),
       ),
     );

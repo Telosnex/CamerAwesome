@@ -4,10 +4,7 @@ import 'package:material_ui/material_ui.dart';
 class AwesomeZoomSelector extends StatefulWidget {
   final CameraState state;
 
-  const AwesomeZoomSelector({
-    super.key,
-    required this.state,
-  });
+  const AwesomeZoomSelector({super.key, required this.state});
 
   @override
   State<AwesomeZoomSelector> createState() => _AwesomeZoomSelectorState();
@@ -192,11 +189,6 @@ class _ZoomIndicator extends StatelessWidget {
     );
 
     // Same width for each dot to keep them in their position
-    return SizedBox(
-      width: 56,
-      child: Center(
-        child: content,
-      ),
-    );
+    return SizedBox(width: 56, child: Center(child: content));
   }
 }

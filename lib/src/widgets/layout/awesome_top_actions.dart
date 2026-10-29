@@ -16,16 +16,17 @@ class AwesomeTopActions extends StatelessWidget {
     required this.state,
     List<Widget>? children,
     this.padding = const EdgeInsets.only(left: 30, right: 30, top: 16),
-  }) : children = children ??
-            (state is VideoRecordingCameraState
-                ? [const SizedBox.shrink()]
-                : [
-                    AwesomeFlashButton(state: state),
-                    if (state is PhotoCameraState)
-                      AwesomeAspectRatioButton(state: state),
-                    if (state is PhotoCameraState)
-                      AwesomeLocationButton(state: state),
-                  ]);
+  }) : children =
+           children ??
+           (state is VideoRecordingCameraState
+               ? [const SizedBox.shrink()]
+               : [
+                   AwesomeFlashButton(state: state),
+                   if (state is PhotoCameraState)
+                     AwesomeAspectRatioButton(state: state),
+                   if (state is PhotoCameraState)
+                     AwesomeLocationButton(state: state),
+                 ]);
 
   @override
   Widget build(BuildContext context) {

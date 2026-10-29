@@ -25,7 +25,7 @@ class SingleCaptureRequest extends CaptureRequest {
   final Sensor sensor;
 
   SingleCaptureRequest(String? filePath, this.sensor)
-      : file = filePath == null ? null : XFile(filePath);
+    : file = filePath == null ? null : XFile(filePath);
 
   @override
   String? get path => file?.path;
@@ -35,12 +35,12 @@ class MultipleCaptureRequest extends CaptureRequest {
   final Map<Sensor, XFile?> fileBySensor;
 
   MultipleCaptureRequest(Map<Sensor, String?> filePathBySensor)
-      : fileBySensor = {
-          for (final sensor in filePathBySensor.keys)
-            sensor: filePathBySensor[sensor] != null
-                ? XFile(filePathBySensor[sensor]!)
-                : null,
-        };
+    : fileBySensor = {
+        for (final sensor in filePathBySensor.keys)
+          sensor: filePathBySensor[sensor] != null
+              ? XFile(filePathBySensor[sensor]!)
+              : null,
+      };
 
   @override
   String? get path =>

@@ -27,20 +27,22 @@ class AwesomeCameraLayout extends StatelessWidget {
     Widget? middleContent,
     Widget? topActions,
     Widget? bottomActions,
-  })  : middleContent = middleContent ??
-            (Column(
-              children: [
-                const Spacer(),
-                if (state is PhotoCameraState && state.hasFilters)
-                  AwesomeFilterWidget(state: state)
-                else if (!kIsWeb && Platform.isAndroid)
-                  AwesomeZoomSelector(state: state),
-                AwesomeCameraModeSelector(state: state),
-              ],
-            )),
-        topActions = topActions ?? AwesomeTopActions(state: state),
-        bottomActions = bottomActions ??
-            AwesomeBottomActions(state: state, onMediaTap: onMediaTap);
+  }) : middleContent =
+           middleContent ??
+           (Column(
+             children: [
+               const Spacer(),
+               if (state is PhotoCameraState && state.hasFilters)
+                 AwesomeFilterWidget(state: state)
+               else if (!kIsWeb && Platform.isAndroid)
+                 AwesomeZoomSelector(state: state),
+               AwesomeCameraModeSelector(state: state),
+             ],
+           )),
+       topActions = topActions ?? AwesomeTopActions(state: state),
+       bottomActions =
+           bottomActions ??
+           AwesomeBottomActions(state: state, onMediaTap: onMediaTap);
 
   @override
   Widget build(BuildContext context) {
@@ -55,11 +57,7 @@ class AwesomeCameraLayout extends StatelessWidget {
             color: theme.bottomActionsBackgroundColor,
             child: SafeArea(
               top: false,
-              child: Column(
-                children: [
-                  bottomActions,
-                ],
-              ),
+              child: Column(children: [bottomActions]),
             ),
           ),
         ],

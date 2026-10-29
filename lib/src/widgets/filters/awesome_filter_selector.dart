@@ -99,10 +99,7 @@ class _AwesomeFilterSelectorState extends State<AwesomeFilterSelector> {
                   decoration: BoxDecoration(
                     color: Colors.transparent,
                     borderRadius: const BorderRadius.all(Radius.circular(9)),
-                    border: Border.all(
-                      color: Colors.white,
-                      width: 3,
-                    ),
+                    border: Border.all(color: Colors.white, width: 3),
                   ),
                 ),
               ),
@@ -123,10 +120,7 @@ class _FilterPreview extends StatelessWidget {
   final ColorFilter filter;
   final int? textureId;
 
-  const _FilterPreview({
-    required this.filter,
-    required this.textureId,
-  });
+  const _FilterPreview({required this.filter, required this.textureId});
 
   @override
   Widget build(BuildContext context) {

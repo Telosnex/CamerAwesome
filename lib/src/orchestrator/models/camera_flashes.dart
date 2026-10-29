@@ -1,6 +1,1 @@
-enum FlashMode {
-  none,
-  on,
-  auto,
-  always,
-}
+enum FlashMode { none, on, auto, always }

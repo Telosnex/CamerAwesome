@@ -3,9 +3,7 @@ part of 'analysis_image.dart';
 extension Nv21Converter on Nv21Image {
   /// Converts the image to a [JpegImage], helping when one wants to display it
   /// or make JPEG treatment on it.
-  Future<JpegImage> toJpeg({
-    int quality = 100,
-  }) async {
+  Future<JpegImage> toJpeg({int quality = 100}) async {
     final jpegQuality = quality.clamp(0, 100);
     final wrappedImage = await AnalysisImageUtils().nv21toJpeg(
       wrapped(),
@@ -18,9 +16,7 @@ extension Nv21Converter on Nv21Image {
 extension Yuv420Converter on Yuv420Image {
   /// Converts the image to a [JpegImage], helping when one wants to display it
   /// or make JPEG treatment on it.
-  Future<JpegImage> toJpeg({
-    int quality = 100,
-  }) async {
+  Future<JpegImage> toJpeg({int quality = 100}) async {
     final jpegQuality = quality.clamp(0, 100);
     final wrappedImage = await AnalysisImageUtils().yuv420toJpeg(
       wrapped(),
@@ -31,17 +27,13 @@ extension Yuv420Converter on Yuv420Image {
 
   /// Converts the image to a [Nv21Image].
   Future<Nv21Image> toNv21() async {
-    final wrappedImage = await AnalysisImageUtils().yuv420toNv21(
-      wrapped(),
-    );
+    final wrappedImage = await AnalysisImageUtils().yuv420toNv21(wrapped());
     return wrappedImage.unwrap() as Nv21Image;
   }
 }
 
 extension Bgra8888Converter on Bgra8888Image {
-  Future<JpegImage> toJpeg({
-    int quality = 100,
-  }) async {
+  Future<JpegImage> toJpeg({int quality = 100}) async {
     // TODO Not implemented on the native side
     final jpegQuality = quality.clamp(0, 100);
     final wrappedValue = wrapped();

@@ -72,10 +72,7 @@ class CameraContext {
     required this.availableFilters,
     this.onPermissionsResult,
   }) {
-    var preparingState = PreparingCameraState(
-      this,
-      initialCaptureMode,
-    );
+    var preparingState = PreparingCameraState(this, initialCaptureMode);
     stateController = BehaviorSubject.seeded(preparingState);
     filterSelectorOpened = BehaviorSubject.seeded(false);
     mediaCaptureController = BehaviorSubject.seeded(null);
@@ -93,21 +90,21 @@ class CameraContext {
     required bool enablePhysicalButton,
     List<AwesomeFilter>? availableFilters,
   }) : this._(
-          initialCaptureMode: initialCaptureMode,
-          sensorConfigController: BehaviorSubject.seeded(sensorConfig),
-          filterController: BehaviorSubject.seeded(filter),
-          enablePhysicalButton: enablePhysicalButton,
-          onPermissionsResult: onPermissionsResult,
-          saveConfig: saveConfig,
-          analysisController: onImageForAnalysis != null
-              ? AnalysisController.fromPlugin(
-                  onImageListener: onImageForAnalysis,
-                  conf: analysisConfig,
-                )
-              : null,
-          exifPreferences: exifPreferences,
-          availableFilters: availableFilters,
-        );
+         initialCaptureMode: initialCaptureMode,
+         sensorConfigController: BehaviorSubject.seeded(sensorConfig),
+         filterController: BehaviorSubject.seeded(filter),
+         enablePhysicalButton: enablePhysicalButton,
+         onPermissionsResult: onPermissionsResult,
+         saveConfig: saveConfig,
+         analysisController: onImageForAnalysis != null
+             ? AnalysisController.fromPlugin(
+                 onImageListener: onImageForAnalysis,
+                 conf: analysisConfig,
+               )
+             : null,
+         exifPreferences: exifPreferences,
+         availableFilters: availableFilters,
+       );
 
   changeState(CameraState newState) async {
     final currentZoom = state.sensorConfig.zoom;
@@ -146,9 +143,7 @@ class CameraContext {
         !identical(newConfig, sensorConfigController.value)) {
       sensorConfigController.value.dispose();
     }
-    await CamerawesomePlugin.setSensor(
-      newConfig.sensors,
-    );
+    await CamerawesomePlugin.setSensor(newConfig.sensors);
   }
 
   SensorConfig get sensorConfig {
@@ -201,7 +196,8 @@ class CameraContext {
       return CamerawesomePlugin.focusOnPoint(
         position: pixelPosition,
         previewSize: pixelPreviewSize,
-        androidFocusSettings: androidFocusSettings ??
+        androidFocusSettings:
+            androidFocusSettings ??
             AndroidFocusSettings(autoCancelDurationInMillis: 5000),
       );
     }
@@ -216,7 +212,8 @@ class CameraContext {
   }
 
   Future<int?> previewTextureId(int cameraPosition) {
-    return CamerawesomePlugin.getPreviewTexture(cameraPosition)
-        .then(((value) => value?.toInt()));
+    return CamerawesomePlugin.getPreviewTexture(
+      cameraPosition,
+    ).then(((value) => value?.toInt()));
   }
 }

@@ -11,11 +11,12 @@ final presetConvolutionFiltersList = [
   ImageFilter(name: "Emboss")
     ..addSubFilter(ConvolutionSubFilter.fromKernel(embossKernel)),
   ImageFilter(name: "Colored Edge Detection")
-    ..subFilters
-        .add(ConvolutionSubFilter.fromKernel(coloredEdgeDetectionKernel)),
-  ImageFilter(name: "Edge Detection Medium")
-    ..subFilters
-        .add(ConvolutionSubFilter.fromKernel(edgeDetectionMediumKernel)),
+    ..subFilters.add(
+      ConvolutionSubFilter.fromKernel(coloredEdgeDetectionKernel),
+    ),
+  ImageFilter(
+    name: "Edge Detection Medium",
+  )..subFilters.add(ConvolutionSubFilter.fromKernel(edgeDetectionMediumKernel)),
   ImageFilter(name: "Edge Detection Hard")
     ..addSubFilter(ConvolutionSubFilter.fromKernel(edgeDetectionHardKernel)),
   ImageFilter(name: "Blur")

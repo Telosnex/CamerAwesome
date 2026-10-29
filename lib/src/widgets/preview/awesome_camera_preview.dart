@@ -8,12 +8,7 @@ import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:flutter/foundation.dart';
 import 'package:material_ui/material_ui.dart';
 
-enum CameraPreviewFit {
-  fitWidth,
-  fitHeight,
-  contain,
-  cover,
-}
+enum CameraPreviewFit { fitWidth, fitHeight, contain, cover }
 
 /// This is a fullscreen camera preview
 /// some part of the preview are cropped so we have a full sized camera preview
@@ -68,10 +63,7 @@ class AwesomeCameraPreviewState extends State<AwesomeCameraPreview> {
   @override
   void initState() {
     super.initState();
-    Future.wait([
-      widget.state.previewSize(0),
-      _loadTextures(),
-    ]).then((data) {
+    Future.wait([widget.state.previewSize(0), _loadTextures()]).then((data) {
       if (mounted) {
         setState(() {
           _previewSize = data[0];
@@ -80,11 +72,13 @@ class AwesomeCameraPreviewState extends State<AwesomeCameraPreview> {
     });
 
     // refactor this
-    _sensorConfigSubscription =
-        widget.state.sensorConfig$.listen((sensorConfig) {
+    _sensorConfigSubscription = widget.state.sensorConfig$.listen((
+      sensorConfig,
+    ) {
       _aspectRatioSubscription?.cancel();
-      _aspectRatioSubscription =
-          sensorConfig.aspectRatio$.listen((event) async {
+      _aspectRatioSubscription = sensorConfig.aspectRatio$.listen((
+        event,
+      ) async {
         final previewSize = await widget.state.previewSize(0);
         if ((_previewSize != previewSize || _aspectRatio != event) && mounted) {
           setState(() {
@@ -118,18 +112,14 @@ class AwesomeCameraPreviewState extends State<AwesomeCameraPreview> {
       for (int i = 0; i < 2; i++) {
         final textureId = await widget.state.previewTextureId(0);
         if (textureId != null) {
-          _textures.add(
-            Texture(textureId: textureId),
-          );
+          _textures.add(Texture(textureId: textureId));
         }
       }
     } else {
       for (int i = 0; i < sensors; i++) {
         final textureId = await widget.state.previewTextureId(i);
         if (textureId != null) {
-          _textures.add(
-            Texture(textureId: textureId),
-          );
+          _textures.add(Texture(textureId: textureId));
         }
       }
     }
@@ -179,13 +169,13 @@ class AwesomeCameraPreviewState extends State<AwesomeCameraPreview> {
                   child: AwesomeCameraGestureDetector(
                     onPreviewTapBuilder:
                         widget.onPreviewTap != null && _previewSize != null
-                            ? OnPreviewTapBuilder(
-                                pixelPreviewSizeGetter: () => _previewSize!,
-                                flutterPreviewSizeGetter: () =>
-                                    _previewSize!, //croppedPreviewSize,
-                                onPreviewTap: widget.onPreviewTap!,
-                              )
-                            : null,
+                        ? OnPreviewTapBuilder(
+                            pixelPreviewSizeGetter: () => _previewSize!,
+                            flutterPreviewSizeGetter: () =>
+                                _previewSize!, //croppedPreviewSize,
+                            onPreviewTap: widget.onPreviewTap!,
+                          )
+                        : null,
                     onPreviewScale: widget.onPreviewScale,
                     initialZoom: widget.state.sensorConfig.zoom,
                     child: StreamBuilder<AwesomeFilter>(
@@ -213,10 +203,7 @@ class AwesomeCameraPreviewState extends State<AwesomeCameraPreview> {
                 ),
               if (_preview != null)
                 Positioned.fill(
-                  child: widget.interfaceBuilder(
-                    widget.state,
-                    _preview!,
-                  ),
+                  child: widget.interfaceBuilder(widget.state, _preview!),
                 ),
               // TODO: be draggable
               // TODO: add shadow & border
@@ -252,13 +239,13 @@ class AwesomeCameraPreviewState extends State<AwesomeCameraPreview> {
         aspectRatio: 1 / _aspectRatioValue!,
         pictureInPictureConfig:
             widget.pictureInPictureConfigBuilder?.call(i, sensor) ??
-                PictureInPictureConfig(
-                  startingPosition: Offset(
-                    i * 20,
-                    MediaQuery.of(context).padding.top + 60 + (i * 20),
-                  ),
-                  sensor: sensor,
-                ),
+            PictureInPictureConfig(
+              startingPosition: Offset(
+                i * 20,
+                MediaQuery.of(context).padding.top + 60 + (i * 20),
+              ),
+              sensor: sensor,
+            ),
       );
       previewFrames.add(frame);
     }

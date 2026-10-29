@@ -7,15 +7,14 @@ import 'package:camerawesome/src/orchestrator/models/sensors.dart';
 import 'package:path_provider/path_provider.dart';
 
 class CaptureRequestBuilderImpl extends BaseCaptureRequestBuilder {
-  Future<String> newFile(
-    CaptureMode captureMode, {
-    Sensor? sensor,
-  }) async {
+  Future<String> newFile(CaptureMode captureMode, {Sensor? sensor}) async {
     final Directory extDir = await getTemporaryDirectory();
-    final testDir =
-        await Directory('${extDir.path}/camerawesome').create(recursive: true);
-    final String fileExtension =
-        captureMode == CaptureMode.photo ? 'jpg' : 'mp4';
+    final testDir = await Directory(
+      '${extDir.path}/camerawesome',
+    ).create(recursive: true);
+    final String fileExtension = captureMode == CaptureMode.photo
+        ? 'jpg'
+        : 'mp4';
     String extension = "";
     if (sensor != null) {
       if (sensor.position != null) {

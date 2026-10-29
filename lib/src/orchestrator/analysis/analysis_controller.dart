@@ -20,19 +20,18 @@ class AnalysisController {
     required this.conf,
     this.onImageListener,
     required bool analysisEnabled,
-  })  : _images$ = images$,
-        _analysisEnabled = analysisEnabled;
+  }) : _images$ = images$,
+       _analysisEnabled = analysisEnabled;
 
   factory AnalysisController.fromPlugin({
     OnImageForAnalysis? onImageListener,
     required AnalysisConfig? conf,
-  }) =>
-      AnalysisController._(
-        onImageListener: onImageListener,
-        conf: conf ?? AnalysisConfig(),
-        images$: CamerawesomePlugin.listenCameraImages(),
-        analysisEnabled: conf?.autoStart ?? true,
-      );
+  }) => AnalysisController._(
+    onImageListener: onImageListener,
+    conf: conf ?? AnalysisConfig(),
+    images$: CamerawesomePlugin.listenCameraImages(),
+    analysisEnabled: conf?.autoStart ?? true,
+  );
 
   Future<void> setup() async {
     if (onImageListener == null) {

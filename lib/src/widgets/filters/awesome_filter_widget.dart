@@ -6,10 +6,7 @@ import 'package:camerawesome/src/widgets/filters/awesome_filter_selector.dart';
 import 'package:flutter/foundation.dart';
 import 'package:material_ui/material_ui.dart';
 
-enum FilterListPosition {
-  aboveButton,
-  belowButton,
-}
+enum FilterListPosition { aboveButton, belowButton }
 
 class AwesomeFilterWidget extends StatefulWidget {
   final CameraState state;
@@ -30,25 +27,25 @@ class AwesomeFilterWidget extends StatefulWidget {
     this.animationCurve = Curves.easeInOut,
     this.animationDuration = const Duration(milliseconds: 400),
   }) : indicator = Builder(
-          builder: (context) => Container(
-            color: AwesomeThemeProvider.of(context)
-                .theme
-                .bottomActionsBackgroundColor,
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: const Center(
-              child: SizedBox(
-                height: 6,
-                width: 6,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        );
+         builder: (context) => Container(
+           color: AwesomeThemeProvider.of(
+             context,
+           ).theme.bottomActionsBackgroundColor,
+           padding: const EdgeInsets.symmetric(vertical: 8.0),
+           child: const Center(
+             child: SizedBox(
+               height: 6,
+               width: 6,
+               child: DecoratedBox(
+                 decoration: BoxDecoration(
+                   color: Colors.white,
+                   shape: BoxShape.circle,
+                 ),
+               ),
+             ),
+           ),
+         ),
+       );
 
   @override
   State<AwesomeFilterWidget> createState() => _AwesomeFilterWidgetState();
@@ -60,7 +57,8 @@ class _AwesomeFilterWidgetState extends State<AwesomeFilterWidget> {
     final theme = AwesomeThemeProvider.of(context).theme;
     final children = [
       SizedBox(
-        height: theme.buttonTheme.iconSize +
+        height:
+            theme.buttonTheme.iconSize +
             theme.buttonTheme.padding.top +
             theme.buttonTheme.padding.bottom,
         width: double.infinity,
@@ -77,25 +75,28 @@ class _AwesomeFilterWidgetState extends State<AwesomeFilterWidget> {
                     child: snapshot.data == true
                         ? Align(
                             key: const ValueKey("NameIndicator"),
-                            alignment: widget.filterListPosition ==
+                            alignment:
+                                widget.filterListPosition ==
                                     FilterListPosition.belowButton
                                 ? Alignment.bottomCenter
                                 : Alignment.topCenter,
-                            child:
-                                AwesomeFilterNameIndicator(state: widget.state),
+                            child: AwesomeFilterNameIndicator(
+                              state: widget.state,
+                            ),
                           )
                         : (!kIsWeb &&
-                                Platform
-                                    .isAndroid) // FIXME this should not be here and makes the code ugly
-                            ? Center(
-                                key: const ValueKey("ZoomIndicator"),
-                                child: AwesomeZoomSelector(state: widget.state),
-                              )
-                            : Center(
-                                key: const ValueKey("SensorTypeSelector"),
-                                child: AwesomeSensorTypeSelector(
-                                    state: widget.state),
-                              ),
+                              Platform
+                                  .isAndroid) // FIXME this should not be here and makes the code ugly
+                        ? Center(
+                            key: const ValueKey("ZoomIndicator"),
+                            child: AwesomeZoomSelector(state: widget.state),
+                          )
+                        : Center(
+                            key: const ValueKey("SensorTypeSelector"),
+                            child: AwesomeSensorTypeSelector(
+                              state: widget.state,
+                            ),
+                          ),
                   );
                 },
               ),
@@ -103,8 +104,8 @@ class _AwesomeFilterWidgetState extends State<AwesomeFilterWidget> {
             Positioned(
               bottom:
                   widget.filterListPosition == FilterListPosition.belowButton
-                      ? 0
-                      : null,
+                  ? 0
+                  : null,
               top: widget.filterListPosition == FilterListPosition.belowButton
                   ? null
                   : 0,
@@ -125,8 +126,8 @@ class _AwesomeFilterWidgetState extends State<AwesomeFilterWidget> {
               verticalAnimation: true,
               alignment:
                   widget.filterListPosition == FilterListPosition.belowButton
-                      ? Alignment.topCenter
-                      : Alignment.bottomCenter,
+                  ? Alignment.topCenter
+                  : Alignment.bottomCenter,
               duration: widget.animationDuration,
               curve: widget.animationCurve,
               reverseCurve: widget.animationCurve.flipped,

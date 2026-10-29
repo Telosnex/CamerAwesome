@@ -8,10 +8,7 @@ import 'package:flutter/services.dart';
 class AwesomeCaptureButton extends StatefulWidget {
   final CameraState state;
 
-  const AwesomeCaptureButton({
-    super.key,
-    required this.state,
-  });
+  const AwesomeCaptureButton({super.key, required this.state});
 
   @override
   _AwesomeCaptureButtonState createState() => _AwesomeCaptureButtonState();
@@ -27,14 +24,15 @@ class _AwesomeCaptureButtonState extends State<AwesomeCaptureButton>
   void initState() {
     super.initState();
 
-    _animationController = AnimationController(
-      vsync: this,
-      duration: _duration,
-      lowerBound: 0.0,
-      upperBound: 0.1,
-    )..addListener(() {
-        setState(() {});
-      });
+    _animationController =
+        AnimationController(
+          vsync: this,
+          duration: _duration,
+          lowerBound: 0.0,
+          upperBound: 0.1,
+        )..addListener(() {
+          setState(() {});
+        });
   }
 
   @override
@@ -92,12 +90,12 @@ class _AwesomeCaptureButtonState extends State<AwesomeCaptureButton>
   }
 
   get onTap => () {
-        widget.state.when(
-          onPhotoMode: (photoState) => photoState.takePhoto(),
-          onVideoMode: (videoState) => videoState.startRecording(),
-          onVideoRecordingMode: (videoState) => videoState.stopRecording(),
-        );
-      };
+    widget.state.when(
+      onPhotoMode: (photoState) => photoState.takePhoto(),
+      onVideoMode: (videoState) => videoState.startRecording(),
+      onVideoRecordingMode: (videoState) => videoState.stopRecording(),
+    );
+  };
 }
 
 class CameraButtonPainter extends CustomPainter {
@@ -124,9 +122,7 @@ class CameraButtonPainter extends CustomPainter {
 class VideoButtonPainter extends CustomPainter {
   final bool isRecording;
 
-  VideoButtonPainter({
-    this.isRecording = false,
-  });
+  VideoButtonPainter({this.isRecording = false});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -141,15 +137,12 @@ class VideoButtonPainter extends CustomPainter {
     if (isRecording) {
       bgPainter.color = Colors.red;
       canvas.drawRRect(
-          RRect.fromRectAndRadius(
-              Rect.fromLTWH(
-                17,
-                17,
-                size.width - (17 * 2),
-                size.height - (17 * 2),
-              ),
-              const Radius.circular(12.0)),
-          bgPainter);
+        RRect.fromRectAndRadius(
+          Rect.fromLTWH(17, 17, size.width - (17 * 2), size.height - (17 * 2)),
+          const Radius.circular(12.0),
+        ),
+        bgPainter,
+      );
     } else {
       bgPainter.color = Colors.red;
       canvas.drawCircle(center, radius - 8, bgPainter);

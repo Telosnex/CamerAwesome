@@ -19,30 +19,29 @@ class AwesomeFlashButton extends StatelessWidget {
     this.theme,
     Widget Function(FlashMode)? iconBuilder,
     void Function(SensorConfig, FlashMode)? onFlashTap,
-  })  : iconBuilder = iconBuilder ??
-            ((flashMode) {
-              final IconData icon;
-              switch (flashMode) {
-                case FlashMode.none:
-                  icon = Icons.flash_off;
-                  break;
-                case FlashMode.on:
-                  icon = Icons.flash_on;
-                  break;
-                case FlashMode.auto:
-                  icon = Icons.flash_auto;
-                  break;
-                case FlashMode.always:
-                  icon = Icons.flashlight_on;
-                  break;
-              }
-              return AwesomeCircleWidget.icon(
-                icon: icon,
-                theme: theme,
-              );
-            }),
-        onFlashTap = onFlashTap ??
-            ((sensorConfig, flashMode) => sensorConfig.switchCameraFlash());
+  }) : iconBuilder =
+           iconBuilder ??
+           ((flashMode) {
+             final IconData icon;
+             switch (flashMode) {
+               case FlashMode.none:
+                 icon = Icons.flash_off;
+                 break;
+               case FlashMode.on:
+                 icon = Icons.flash_on;
+                 break;
+               case FlashMode.auto:
+                 icon = Icons.flash_auto;
+                 break;
+               case FlashMode.always:
+                 icon = Icons.flashlight_on;
+                 break;
+             }
+             return AwesomeCircleWidget.icon(icon: icon, theme: theme);
+           }),
+       onFlashTap =
+           onFlashTap ??
+           ((sensorConfig, flashMode) => sensorConfig.switchCameraFlash());
 
   @override
   Widget build(BuildContext context) {

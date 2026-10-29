@@ -2,8 +2,8 @@ import 'package:camerawesome/camerawesome_plugin.dart';
 import 'package:camerawesome/pigeon.dart';
 import 'package:camerawesome/src/orchestrator/file/builder/capture_request_builder.dart';
 
-typedef CaptureRequestBuilder = Future<CaptureRequest> Function(
-    List<Sensor> sensors);
+typedef CaptureRequestBuilder =
+    Future<CaptureRequest> Function(List<Sensor> sensors);
 
 class SaveConfig {
   final CaptureRequestBuilder? photoPathBuilder;
@@ -32,14 +32,17 @@ class SaveConfig {
     ExifPreferences? exifPreferences,
     bool mirrorFrontCamera = false,
   }) : this._(
-          photoPathBuilder: pathBuilder ??
-              (sensors) => AwesomeCaptureRequestBuilder()
-                  .build(captureMode: CaptureMode.photo, sensors: sensors),
-          captureModes: [CaptureMode.photo],
-          initialCaptureMode: CaptureMode.photo,
-          exifPreferences: exifPreferences,
-          mirrorFrontCamera: mirrorFrontCamera,
-        );
+         photoPathBuilder:
+             pathBuilder ??
+             (sensors) => AwesomeCaptureRequestBuilder().build(
+               captureMode: CaptureMode.photo,
+               sensors: sensors,
+             ),
+         captureModes: [CaptureMode.photo],
+         initialCaptureMode: CaptureMode.photo,
+         exifPreferences: exifPreferences,
+         mirrorFrontCamera: mirrorFrontCamera,
+       );
 
   /// You only want to take videos
   SaveConfig.video({
@@ -47,14 +50,17 @@ class SaveConfig {
     VideoOptions? videoOptions,
     bool mirrorFrontCamera = false,
   }) : this._(
-          videoPathBuilder: pathBuilder ??
-              (sensors) => AwesomeCaptureRequestBuilder()
-                  .build(captureMode: CaptureMode.video, sensors: sensors),
-          captureModes: [CaptureMode.video],
-          initialCaptureMode: CaptureMode.video,
-          videoOptions: videoOptions,
-          mirrorFrontCamera: mirrorFrontCamera,
-        );
+         videoPathBuilder:
+             pathBuilder ??
+             (sensors) => AwesomeCaptureRequestBuilder().build(
+               captureMode: CaptureMode.video,
+               sensors: sensors,
+             ),
+         captureModes: [CaptureMode.video],
+         initialCaptureMode: CaptureMode.video,
+         videoOptions: videoOptions,
+         mirrorFrontCamera: mirrorFrontCamera,
+       );
 
   /// You want to be able to take both photos and videos
   SaveConfig.photoAndVideo({
@@ -65,16 +71,22 @@ class SaveConfig {
     ExifPreferences? exifPreferences,
     bool mirrorFrontCamera = false,
   }) : this._(
-          photoPathBuilder: photoPathBuilder ??
-              (sensors) => AwesomeCaptureRequestBuilder()
-                  .build(captureMode: CaptureMode.photo, sensors: sensors),
-          videoPathBuilder: videoPathBuilder ??
-              (sensors) => AwesomeCaptureRequestBuilder()
-                  .build(captureMode: CaptureMode.video, sensors: sensors),
-          captureModes: [CaptureMode.photo, CaptureMode.video],
-          initialCaptureMode: initialCaptureMode,
-          videoOptions: videoOptions,
-          exifPreferences: exifPreferences,
-          mirrorFrontCamera: mirrorFrontCamera,
-        );
+         photoPathBuilder:
+             photoPathBuilder ??
+             (sensors) => AwesomeCaptureRequestBuilder().build(
+               captureMode: CaptureMode.photo,
+               sensors: sensors,
+             ),
+         videoPathBuilder:
+             videoPathBuilder ??
+             (sensors) => AwesomeCaptureRequestBuilder().build(
+               captureMode: CaptureMode.video,
+               sensors: sensors,
+             ),
+         captureModes: [CaptureMode.photo, CaptureMode.video],
+         initialCaptureMode: initialCaptureMode,
+         videoOptions: videoOptions,
+         exifPreferences: exifPreferences,
+         mirrorFrontCamera: mirrorFrontCamera,
+       );
 }

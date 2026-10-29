@@ -6,14 +6,11 @@ import 'package:camerawesome/src/orchestrator/camera_context.dart';
 
 /// Only image analysis, no preview, no photo or video captures
 class AnalysisCameraState extends CameraState {
-  AnalysisCameraState({
-    required CameraContext cameraContext,
-  }) : super(cameraContext);
+  AnalysisCameraState({required CameraContext cameraContext})
+    : super(cameraContext);
 
   factory AnalysisCameraState.from(CameraContext orchestrator) =>
-      AnalysisCameraState(
-        cameraContext: orchestrator,
-      );
+      AnalysisCameraState(cameraContext: orchestrator);
 
   @override
   CaptureMode get captureMode => CaptureMode.analysis_only;

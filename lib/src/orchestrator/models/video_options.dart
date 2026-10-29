@@ -72,10 +72,6 @@ class CupertinoVideoOptions {
   });
 
   Map<String, dynamic> toMap() {
-    return {
-      'codec': codec.name,
-      'fileType': fileType.name,
-      'fps': fps,
-    };
+    return {'codec': codec.name, 'fileType': fileType.name, 'fps': fps};
   }
 }

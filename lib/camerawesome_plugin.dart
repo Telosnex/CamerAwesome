@@ -30,17 +30,21 @@ enum CameraRunningState { starting, started, stopping, stopped }
 
 /// Don't use this class directly. Instead, use [CameraAwesomeBuilder].
 class CamerawesomePlugin {
-  static const EventChannel _orientationChannel =
-      EventChannel('camerawesome/orientation');
+  static const EventChannel _orientationChannel = EventChannel(
+    'camerawesome/orientation',
+  );
 
-  static const EventChannel _permissionsChannel =
-      EventChannel('camerawesome/permissions');
+  static const EventChannel _permissionsChannel = EventChannel(
+    'camerawesome/permissions',
+  );
 
-  static const EventChannel _imagesChannel =
-      EventChannel('camerawesome/images');
+  static const EventChannel _imagesChannel = EventChannel(
+    'camerawesome/images',
+  );
 
-  static const EventChannel _physicalButtonChannel =
-      EventChannel('camerawesome/physical_button');
+  static const EventChannel _physicalButtonChannel = EventChannel(
+    'camerawesome/physical_button',
+  );
 
   static Stream<CameraOrientations>? _orientationStream;
 
@@ -56,9 +60,11 @@ class CamerawesomePlugin {
   static bool printLogs = false;
 
   static Future<bool?> checkiOSPermissions(
-      List<String?> permissionsName) async {
-    final permissions =
-        await CameraInterface().checkPermissions(permissionsName);
+    List<String?> permissionsName,
+  ) async {
+    final permissions = await CameraInterface().checkPermissions(
+      permissionsName,
+    );
     return permissions.isEmpty;
   }
 
@@ -93,26 +99,29 @@ class CamerawesomePlugin {
   static Stream<CameraOrientations>? getNativeOrientation() {
     _orientationStream ??= _orientationChannel
         .receiveBroadcastStream('orientationChannel')
-        .transform(StreamTransformer<dynamic, CameraOrientations>.fromHandlers(
+        .transform(
+          StreamTransformer<dynamic, CameraOrientations>.fromHandlers(
             handleData: (data, sink) {
-      CameraOrientations? newOrientation;
-      switch (data) {
-        case 'LANDSCAPE_LEFT':
-          newOrientation = CameraOrientations.landscape_left;
-          break;
-        case 'LANDSCAPE_RIGHT':
-          newOrientation = CameraOrientations.landscape_right;
-          break;
-        case 'PORTRAIT_UP':
-          newOrientation = CameraOrientations.portrait_up;
-          break;
-        case 'PORTRAIT_DOWN':
-          newOrientation = CameraOrientations.portrait_down;
-          break;
-        default:
-      }
-      sink.add(newOrientation!);
-    }));
+              CameraOrientations? newOrientation;
+              switch (data) {
+                case 'LANDSCAPE_LEFT':
+                  newOrientation = CameraOrientations.landscape_left;
+                  break;
+                case 'LANDSCAPE_RIGHT':
+                  newOrientation = CameraOrientations.landscape_right;
+                  break;
+                case 'PORTRAIT_UP':
+                  newOrientation = CameraOrientations.portrait_up;
+                  break;
+                case 'PORTRAIT_DOWN':
+                  newOrientation = CameraOrientations.portrait_down;
+                  break;
+                default:
+              }
+              sink.add(newOrientation!);
+            },
+          ),
+        );
     return _orientationStream;
   }
 
@@ -120,30 +129,35 @@ class CamerawesomePlugin {
     _physicalButtonStream ??= _physicalButtonChannel
         .receiveBroadcastStream('physicalButtonChannel')
         .transform(
-            StreamTransformer<dynamic, CameraPhysicalButton>.fromHandlers(
-                handleData: (data, sink) {
-      CameraPhysicalButton? physicalButton;
-      switch (data) {
-        case 'VOLUME_UP':
-          physicalButton = CameraPhysicalButton.volume_up;
-          break;
-        case 'VOLUME_DOWN':
-          physicalButton = CameraPhysicalButton.volume_down;
-          break;
-        default:
-      }
-      sink.add(physicalButton!);
-    }));
+          StreamTransformer<dynamic, CameraPhysicalButton>.fromHandlers(
+            handleData: (data, sink) {
+              CameraPhysicalButton? physicalButton;
+              switch (data) {
+                case 'VOLUME_UP':
+                  physicalButton = CameraPhysicalButton.volume_up;
+                  break;
+                case 'VOLUME_DOWN':
+                  physicalButton = CameraPhysicalButton.volume_down;
+                  break;
+                default:
+              }
+              sink.add(physicalButton!);
+            },
+          ),
+        );
     return _physicalButtonStream;
   }
 
   static Stream<bool>? listenPermissionResult() {
     _permissionsStream ??= _permissionsChannel
         .receiveBroadcastStream('permissionsChannel')
-        .transform(StreamTransformer<dynamic, bool>.fromHandlers(
+        .transform(
+          StreamTransformer<dynamic, bool>.fromHandlers(
             handleData: (data, sink) {
-      sink.add(data);
-    }));
+              sink.add(data);
+            },
+          ),
+        );
     return _permissionsStream;
   }
 
@@ -162,14 +176,15 @@ class CamerawesomePlugin {
   }
 
   static Stream<Map<String, dynamic>>? listenCameraImages() {
-    _imagesStream ??=
-        _imagesChannel.receiveBroadcastStream('imagesChannel').transform(
-      StreamTransformer<dynamic, Map<String, dynamic>>.fromHandlers(
-        handleData: (data, sink) {
-          sink.add(Map<String, dynamic>.from(data));
-        },
-      ),
-    );
+    _imagesStream ??= _imagesChannel
+        .receiveBroadcastStream('imagesChannel')
+        .transform(
+          StreamTransformer<dynamic, Map<String, dynamic>>.fromHandlers(
+            handleData: (data, sink) {
+              sink.add(Map<String, dynamic>.from(data));
+            },
+          ),
+        );
     return _imagesStream;
   }
 
@@ -218,7 +233,8 @@ class CamerawesomePlugin {
 
   static Future<void> setPreviewSize(int width, int height) {
     return CameraInterface().setPreviewSize(
-        PreviewSize(width: width.toDouble(), height: height.toDouble()));
+      PreviewSize(width: width.toDouble(), height: height.toDouble()),
+    );
   }
 
   static Future<void> refresh() {
@@ -240,18 +256,13 @@ class CamerawesomePlugin {
   /// for iOS, when taking a photo, best quality is automatically used
   static Future<void> setPhotoSize(int width, int height) {
     return CameraInterface().setPhotoSize(
-      PreviewSize(
-        width: width.toDouble(),
-        height: height.toDouble(),
-      ),
+      PreviewSize(width: width.toDouble(), height: height.toDouble()),
     );
   }
 
   static Future<bool> takePhoto(CaptureRequest captureRequest) async {
     final request = captureRequest.when(
-      single: (single) => {
-        single.sensor.toPigeon(): single.file?.path,
-      },
+      single: (single) => {single.sensor.toPigeon(): single.file?.path},
       multiple: (multiple) => multiple.fileBySensor.map((key, value) {
         return MapEntry(key.toPigeon(), value?.path);
       }),
@@ -265,11 +276,10 @@ class CamerawesomePlugin {
 
   static Future<void> recordVideo(CaptureRequest request) {
     final pathBySensor = request.when(
-      single: (single) => {
-        single.sensor.toPigeon(): single.file?.path,
-      },
-      multiple: (multiple) => multiple.fileBySensor
-          .map((key, value) => MapEntry(key.toPigeon(), value?.path)),
+      single: (single) => {single.sensor.toPigeon(): single.file?.path},
+      multiple: (multiple) => multiple.fileBySensor.map(
+        (key, value) => MapEntry(key.toPigeon(), value?.path),
+      ),
     );
     if (Platform.isAndroid) {
       return CameraInterface().recordVideo(
@@ -443,27 +453,19 @@ class CamerawesomePlugin {
 
       return SensorDeviceData(
         ultraWideAngle: backSensorsData
-            .where(
-              (element) => element.sensorType == SensorType.ultraWideAngle,
-            )
+            .where((element) => element.sensorType == SensorType.ultraWideAngle)
             .toList()
             .firstOrNull,
         telephoto: backSensorsData
-            .where(
-              (element) => element.sensorType == SensorType.telephoto,
-            )
+            .where((element) => element.sensorType == SensorType.telephoto)
             .toList()
             .firstOrNull,
         wideAngle: backSensorsData
-            .where(
-              (element) => element.sensorType == SensorType.wideAngle,
-            )
+            .where((element) => element.sensorType == SensorType.wideAngle)
             .toList()
             .firstOrNull,
         trueDepth: frontSensorsData
-            .where(
-              (element) => element.sensorType == SensorType.trueDepth,
-            )
+            .where((element) => element.sensorType == SensorType.trueDepth)
             .toList()
             .firstOrNull,
       );
@@ -480,14 +482,17 @@ class CamerawesomePlugin {
   }) async {
     try {
       if (Platform.isAndroid) {
-        return CameraInterface()
-            .requestPermissions(saveGpsLocation)
-            .then((givenPermissions) {
-          return givenPermissions
-              .map((e) => CamerAwesomePermission.values
-                  .firstWhere((element) => element.name == e))
-              .toList();
-        });
+        return await CameraInterface().requestPermissions(saveGpsLocation).then(
+          (givenPermissions) {
+            return givenPermissions
+                .map(
+                  (e) => CamerAwesomePermission.values.firstWhere(
+                    (element) => element.name == e,
+                  ),
+                )
+                .toList();
+          },
+        );
       } else if (Platform.isIOS) {
         // TODO iOS Return only permissions that were given
 
@@ -499,8 +504,9 @@ class CamerawesomePlugin {
           permissions.add("camera");
         }
 
-        return CamerawesomePlugin.checkiOSPermissions(permissions)
-            .then((givenPermissions) => CamerAwesomePermission.values);
+        return await CamerawesomePlugin.checkiOSPermissions(
+          permissions,
+        ).then((givenPermissions) => CamerAwesomePermission.values);
       }
     } catch (e) {
       printLog("failed to check permissions here...");

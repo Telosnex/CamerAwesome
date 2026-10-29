@@ -33,15 +33,20 @@ class VideoCameraState extends CameraState {
   /// You can listen to [cameraSetup.mediaCaptureStream] to get updates
   /// of the photo capture (capturing, success/failure)
   Future<CaptureRequest> startRecording() async {
-    CaptureRequest captureRequest =
-        await filePathBuilder(sensorConfig.sensors.nonNulls.toList());
+    CaptureRequest captureRequest = await filePathBuilder(
+      sensorConfig.sensors.nonNulls.toList(),
+    );
     _mediaCapture = MediaCapture.capturing(
-        captureRequest: captureRequest, videoState: VideoState.started);
+      captureRequest: captureRequest,
+      videoState: VideoState.started,
+    );
     try {
       await CamerawesomePlugin.recordVideo(captureRequest);
     } on Exception catch (e) {
-      _mediaCapture =
-          MediaCapture.failure(captureRequest: captureRequest, exception: e);
+      _mediaCapture = MediaCapture.failure(
+        captureRequest: captureRequest,
+        exception: e,
+      );
     }
     cameraContext.changeState(VideoRecordingCameraState.from(cameraContext));
     return captureRequest;

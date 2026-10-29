@@ -26,16 +26,17 @@ class PhotoCameraState extends CameraState {
     required this.filePathBuilder,
     required this.exifPreferences,
   }) : super(cameraContext) {
-    _saveGpsLocationController =
-        BehaviorSubject.seeded(exifPreferences.saveGPSLocation);
+    _saveGpsLocationController = BehaviorSubject.seeded(
+      exifPreferences.saveGPSLocation,
+    );
     saveGpsLocation$ = _saveGpsLocationController.stream;
   }
 
   factory PhotoCameraState.from(CameraContext orchestrator) => PhotoCameraState(
-        cameraContext: orchestrator,
-        filePathBuilder: orchestrator.saveConfig!.photoPathBuilder!,
-        exifPreferences: orchestrator.exifPreferences,
-      );
+    cameraContext: orchestrator,
+    filePathBuilder: orchestrator.saveConfig!.photoPathBuilder!,
+    exifPreferences: orchestrator.exifPreferences,
+  );
 
   final CaptureRequestBuilder filePathBuilder;
 
@@ -70,14 +71,12 @@ class PhotoCameraState extends CameraState {
     OnPhotoCallback? onPhoto,
     OnPhotoFailedCallback? onPhotoFailed,
   }) async {
-    CaptureRequest captureRequest =
-        await filePathBuilder(sensorConfig.sensors..nonNulls.toList());
+    CaptureRequest captureRequest = await filePathBuilder(
+      sensorConfig.sensors..nonNulls.toList(),
+    );
     final mediaCapture = MediaCapture.capturing(captureRequest: captureRequest);
     if (!mediaCapture.isPicture) {
-      throw ("CaptureRequest must be a picture. ${captureRequest.when(
-        single: (single) => single.file!.path,
-        multiple: (multiple) => multiple.fileBySensor.values.first!.path,
-      )}");
+      throw ("CaptureRequest must be a picture. ${captureRequest.when(single: (single) => single.file!.path, multiple: (multiple) => multiple.fileBySensor.values.first!.path)}");
     }
     _mediaCapture = mediaCapture;
     try {
