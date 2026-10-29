@@ -4,7 +4,7 @@ on:
   push:
     # ci/** branches run it too: a new workflow cannot be started by hand
     # before it is on main.
-    branches: [main, 'ci/**']
+    branches: [master, 'ci/**']
   schedule:
     - cron: '52 5 * * *'
   workflow_dispatch:
