@@ -43,10 +43,12 @@ post_install do |installer|
 
     target.build_configurations.each do |config|
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.5'
-      # CocoaPods excludes arm64 for the simulator when one pod lacks an
-      # arm64 slice. The Apple silicon runners need arm64; the target-level
-      # value overrides the Pods xcconfig, which sets arm64 there.
-      config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = ''
+      # ML Kit's MLImage has no arm64 simulator slice (only device arm64 and
+      # simulator x86_64), so the simulator build is x86_64, which runs under
+      # Rosetta on Apple silicon. Excluding arm64 for the simulator alone is
+      # not enough: the active arch would still be arm64 (ONLY_ACTIVE_ARCH).
+      config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = 'arm64'
+      config.build_settings['ONLY_ACTIVE_ARCH'] = 'NO'
     end
 
     target.build_configurations.each do |config|
@@ -97,4 +99,14 @@ post_install do |installer|
         ]
       end 
   end
+
+  # The Runner app is linked against the same ML Kit frameworks, so it gets
+  # the same simulator arch as the pods.
+  installer.user_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = 'arm64'
+      config.build_settings['ONLY_ACTIVE_ARCH'] = 'NO'
+    end
+  end
+  installer.user_project.save
 end
