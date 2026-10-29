@@ -43,6 +43,10 @@ post_install do |installer|
 
     target.build_configurations.each do |config|
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.5'
+      # CocoaPods excludes arm64 for the simulator when one pod lacks an
+      # arm64 slice. The Apple silicon runners need arm64; the target-level
+      # value overrides the Pods xcconfig, which sets arm64 there.
+      config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = ''
     end
 
     target.build_configurations.each do |config|
