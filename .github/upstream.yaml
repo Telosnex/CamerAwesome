@@ -1,0 +1,10 @@
+# Upstream sources, checked daily by the Upstream watch workflow
+# (telosnex_ci_tools, lib/src/upstream.dart). Set `seen` to skip an update.
+sources:
+  # The repository this one is a fork of. The pin is the last upstream commit
+  # merged here: update it with each merge. Alert once the oldest unmerged
+  # commit is a week old.
+  - name: Apparence-io/CamerAwesome
+    branch: https://github.com/Apparence-io/CamerAwesome
+    pin: 83284f4bd7b9d202271d0a0472d9f0afe98cee07
+    lag_days: 7
